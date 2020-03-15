@@ -1,0 +1,8 @@
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\bin\Debug\netcoreapp3.1\Just_Another_Quiz.Models.deps.json
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\bin\Debug\netcoreapp3.1\Just_Another_Quiz.Models.dll
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\bin\Debug\netcoreapp3.1\Just_Another_Quiz.Models.pdb
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\obj\Debug\netcoreapp3.1\Just_Another_Quiz.Models.csprojAssemblyReference.cache
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\obj\Debug\netcoreapp3.1\Just_Another_Quiz.Models.AssemblyInfoInputs.cache
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\obj\Debug\netcoreapp3.1\Just_Another_Quiz.Models.AssemblyInfo.cs
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\obj\Debug\netcoreapp3.1\Just_Another_Quiz.Models.dll
+D:\GithubRepo\Project_BackendDev_2020\Just_Another_Quiz.Models\obj\Debug\netcoreapp3.1\Just_Another_Quiz.Models.pdb
