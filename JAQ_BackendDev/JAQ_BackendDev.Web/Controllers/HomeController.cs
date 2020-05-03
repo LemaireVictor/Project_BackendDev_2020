@@ -19,12 +19,12 @@ namespace JAQ_BackendDev.Web.Controllers
         public HomeController(ILogger<HomeController> logger, IDataInitializer dataini)
         {
             _logger = logger;
-            //_dataInitializer = dataini;
+            _dataInitializer = dataini;
         }
 
         public async Task<IActionResult> Index()
         {
-            // await _dataInitializer.AddQuiz();
+            await _dataInitializer.InitQuizzes();
             return View();
         }
 

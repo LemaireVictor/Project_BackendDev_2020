@@ -172,3 +172,5 @@ C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.Web\obj\Debug
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.Web\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\Answers.cshtml.g.cs
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.Web\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\CreateAnswer.cshtml.g.cs
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.Web\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\DeleteAnswer.cshtml.g.cs
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.Web\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\PlayQuiz.cshtml.g.cs
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.Web\obj\Debug\netcoreapp3.1\Razor\Views\Quiz\EndQuiz.cshtml.g.cs

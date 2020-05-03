@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JAQ_BackendDev.Models;
 using JAQ_BackendDev.Models.Repositories;
+using JAQ_BackendDev.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -48,31 +49,171 @@ namespace JAQ_BackendDev.Web.Controllers
         public async Task<ActionResult> Questions(Guid quizid)
         {
             var result = await _questionRepo.GetQuestionsQuiz(quizid);
-            var qz = await _quizRepo.GetQuizById(quizid);
-            ViewBag.QuizName = qz.Name;
-            ViewBag.QuizId = qz.Id;
 
-            return View(result);
+            if (result.Count() == 0)
+            {
+                return StatusCode(404);
+            }
+            else
+            {
+                try
+                {
+                    var qz = await _quizRepo.GetQuizById(quizid);
+                    ViewBag.QuizName = qz.Name;
+                    ViewBag.QuizId = qz.Id;
+
+                    return View(result);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
         }
 
         public async Task<ActionResult> Answers(Guid id)
         {
             var result = await _answerRepo.GetAnswersForQuestion(id);
-            var question = await _questionRepo.GetQuestionByIdAsync(id);
 
-            ViewBag.QstName = question.QuestionSelf;
-            ViewBag.QstId = id;
+            if (result.Count() == 0)
+            {
+                return StatusCode(404);
+            }
+            else
+            {
+                try
+                {
+                    var question = await _questionRepo.GetQuestionByIdAsync(id);
 
-            return View(result);
+                    ViewBag.QstName = question.QuestionSelf;
+                    ViewBag.QstId = id;
+
+                    return View(result);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
         }
 
+        public async Task<ActionResult> PlayQuiz(Guid quizId)
+        {
+            Quiz qz = await _quizRepo.GetQuizById(quizId);
+
+            if (qz == null)
+            {
+                return StatusCode(404);
+            }
+
+            else
+            {
+                try
+                {
+
+                    fullQuiz fq = new fullQuiz() { quizName = qz.Name, quizId = qz.Id };
+
+                    var qstnList = await _questionRepo.GetQuestionsQuiz(fq.quizId);
+                    var qstnSelf = qstnList.ToList()[fq.QuestionIndex];
+
+                    var ansListIe = await _answerRepo.GetAnswersForQuestion(qstnSelf.Id);
+                    var ansList = ansListIe.ToList();
+
+                    fq.quizQuestion = qstnSelf;
+                    fq.answers = ansList;
+
+                    ViewBag.score = 0;
+
+                    return View("PlayQuiz", fq);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+
+        public async Task<ActionResult> NextQuestion(string quizName, Guid quizId,int qstnIndex,DateTime date, bool correct, int score)
+        {
+            try
+            {
+                if (correct)
+                {
+                    TimeSpan timeDiff = DateTime.Now.Subtract(date);
+                    if (timeDiff.TotalSeconds > 30 && timeDiff.TotalSeconds < 0)
+                    {
+                    }
+                    else
+                    {
+                        int stp1 = 30 - Convert.ToInt32(timeDiff.TotalSeconds);
+                        score = score + (stp1 * 10);
+                    }
+                }
+                else
+                {
+                }
+
+                fullQuiz fq = new fullQuiz() { quizName = quizName, quizId = quizId, QuestionIndex = qstnIndex };
+
+                var qstnList = await _questionRepo.GetQuestionsQuiz(fq.quizId);
+                fq.QuestionIndex += 1;
+
+                if (fq.QuestionIndex >= qstnList.Count())
+                {
+
+                    // add score to database
+                    Scores newscore = new Scores()
+                    {
+                        AppUserId = _userManager.GetUserId(User),
+                        QuizId = fq.quizId,
+                        Date = DateTime.Now
+                    };
+                    Quiz qz = await _quizRepo.GetQuizById(fq.quizId);
+
+                    QuizScore qzsc = new QuizScore() { score = newscore, quiz = qz };
+
+
+
+                    return View("EndQuiz", qzsc);
+                }
+                else
+                {
+                    var qstnSelf = qstnList.ToList()[fq.QuestionIndex];
+
+                    var ansListIe = await _answerRepo.GetAnswersForQuestion(qstnSelf.Id);
+                    var ansList = ansListIe.ToList();
+
+                    fq.quizQuestion = qstnSelf;
+                    fq.answers = ansList;
+
+                    ViewBag.score = score;
+
+                    return View("PlayQuiz", fq);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
+
         // GET: Quiz/Create
+        [Authorize(Roles = "Admin, Creator")]
         public ActionResult CreateQuiz()
         {
             return View();
         }
 
         // POST: Quiz/Create
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateQuiz(IFormCollection collection, Quiz quiz)
@@ -94,6 +235,7 @@ namespace JAQ_BackendDev.Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Creator")]
         public ActionResult CreateQuestion(Guid quizid)
         {
             ViewBag.QuizId = quizid;
@@ -101,13 +243,13 @@ namespace JAQ_BackendDev.Web.Controllers
         }
 
         // POST: Quiz/Create
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateQuestion(IFormCollection collection, Question question)
         {
             try
             {
-                // TODO: Add insert logic here
                 var created = await _questionRepo.AddQuestionToQuiz(question);
                 if (created == null)
                 {
@@ -121,12 +263,15 @@ namespace JAQ_BackendDev.Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Creator")]
         public async Task<ActionResult> CreateAnswer(Guid questionid)
         {
             ViewBag.QstId = questionid;
             return View();
         }
 
+
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAnswer(IFormCollection collection, Answer ans)
@@ -171,6 +316,7 @@ namespace JAQ_BackendDev.Web.Controllers
         }
 
         // GET: Quiz/Delete/5
+        [Authorize(Roles = "Admin, Creator")]
         public async Task<ActionResult> DeleteQuiz(Guid id)
         {
             if (id == null)
@@ -182,6 +328,7 @@ namespace JAQ_BackendDev.Web.Controllers
         }
 
         // POST: Quiz/Delete/5
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteQuiz(Guid id, IFormCollection collection)

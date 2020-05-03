@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,27 +25,93 @@ namespace JAQ_BackendDev.Models.Data
             this._userMgr = userMgr;
         }
 
-        public async Task AddQuiz()
+        public async Task InitQuizzes()
         {
-            AppUser usr = await _userMgr.FindByNameAsync("Victor@Creator");
+            if (await _userMgr.FindByEmailAsync("Docent@MCT.be") != null)
+            {
+                var usr = await _userMgr.FindByEmailAsync("Docent@MCT.be");
+                if (await _quizRepo.GetQuizByNameAsync("Weird Laws") == null)
+                {
+                    var quiz1 = new Quiz()
+                    {
+                        Name = "Weird Laws",
+                        Description = "Quiz About Wierd Laws Over The World",
+                        Diff = 0,
+                        AppUserId = usr.Id
+                    };
 
-            Quiz qz = new Quiz() { AppUserId = usr.Id, Name = "Weird Laws test", Description = "Strange Laws From Over The World", Diff = 0 };
+                    Quiz quizMade = await _quizRepo.AddQuizAsync(quiz1);
 
-            await _quizRepo.AddQuizAsync(qz);
+                    List<String> qstList1 = new List<string> {
+                        "In which country are only electricians allowed to change light bulbs ?",
+                        "What is illegal on Germany's autobahns ?",
+                        "Wearing what will get you told off at ancient sites in Greece ?",
+                        "Where is chewing gum a no-go ?",
+                        "In Portugal it's illegal to urinate in the what ?",
+                        "In which country is it illegal to step on currency ?",
+                        "In Spain you'll receive a fine for driving in what ?",
+                        "In the US state of Kentucky, women can wear a swimsuit while driving, but only if they carry... ",
+                        "Don't honk your car horn in Cyprus if you're...",
+                        "In Barbados it's illegal to wear what ?"};
 
-            //Question q1 = new Question() { QuestionSelf = "In which country are only electricians allowed to change light bulbs ?", Type = 0 };
-            //Question q2 = new Question() { QuestionSelf = "What is illegal on Germany's autobahns ?", Type = 0 };
-            //Question q3 = new Question() { QuestionSelf = "Wearing what will get you told off at ancient sites in Greece ?", Type = 0 };
-            //Question q4 = new Question() { QuestionSelf = "Where is chewing gum a no-go ? ", Type = 0 };
-            //Question q5 = new Question() { QuestionSelf = "In Portugal it's illegal to urinate in the what ?", Type = 0 };
-            //Question q6 = new Question() { QuestionSelf = "In which country is it illegal to step on currency ?", Type = 0 };
-            //Question q7 = new Question() { QuestionSelf = "In Spain you'll receive a fine for driving in what ?", Type = 0 };
-            //Question q8 = new Question() { QuestionSelf = "In the US state of Kentucky, women can wear a swimsuit while driving, but only if they carry...", Type = 0 };
-            //Question q9 = new Question() { QuestionSelf = "Don't honk your car horn in Cyprus if you're...", Type = 0 };
-            //Question q10 = new Question() { QuestionSelf = "In Barbados it's illegal to wear what?", Type = 0 };
+                    List<List<string>> ansList = new List<List<string>> {
+                        new List<string>{"Kazakhstan","Belgium","Colombia","Australia", "3"},
+                        new List<string>{"Running out of fuel"," Driving With windows down","Singing while driving","using your hazard warning lights", "0"},
+                        new List<string>{"Foam fingers","High heels","Signet rings","Baseball caps", "1"},
+                        new List<string>{"Texas","Vatican City","Switzerland","Singapore", "3"},
+                        new List<string>{"Sea","Shower","Sink","Your neighbour's toilet", "0"},
+                        new List<string>{"Saudi Arabia","Wales","Papua New Guinea","Thailand", "3"},
+                        new List<string>{"Russian-made car","A Portugal football shirt","Flip flops","Both a hat and sunglasses", "2"},
+                        new List<string>{"A crucifix"," A sarong","A bumbag","An self-defence object", "3"},
+                        new List<string>{"Near a hospital","By a beach","Wearing a vest","Driving before 7am", "0"},
+                        new List<string>{"Leopard print","A tie","Camouflage clothing","More than one hat", "2"}
+                    };
+
+                    for (int i = 0; i < qstList1.Count; i++)
+                    {
+                        Question qst = new Question()
+                        {
+                            QuestionSelf = qstList1[i],
+                            QuizId = quizMade.Id,
+                            Type = 0,
+                        };
+
+                        // create Question
+                        var resultqst = await _questionRepo.AddQuestionToQuiz(qst);
+
+                        for (int a = 0; a < 4; a++)
+                        {
+                            if (a == int.Parse(ansList[i][4]))
+                            {
+                                Answer ans = new Answer()
+                                {
+                                    IsCorrect = true,
+                                    Answer_Text = ansList[i][a],
+                                    QuestionId = qst.Id
+                                };
+                                var resultans = await _answerRepo.AddAnswerToQuestion(ans);
+                            }
+
+                            else
+                            {
+                                Answer ans = new Answer()
+                                {
+                                    IsCorrect = false,
+                                    Answer_Text = ansList[i][a],
+                                    QuestionId = qst.Id
+
+                                };
+                                var resultans = await _answerRepo.AddAnswerToQuestion(ans);
+                            }
+
+                        }
 
 
+                    }
+
+                }
             }
+        }
 
     }
 }

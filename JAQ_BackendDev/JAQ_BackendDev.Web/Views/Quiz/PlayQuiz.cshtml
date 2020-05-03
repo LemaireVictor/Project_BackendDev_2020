@@ -1,0 +1,52 @@
+﻿@model JAQ_BackendDev.Web.ViewModels.fullQuiz
+
+@{
+    ViewData["Title"] = "PlayQuiz";
+    DateTime timestarted = DateTime.Now;
+}
+
+
+<h1>PlayQuiz</h1>
+
+<div>
+    <h4>fullQuiz</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.quizName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.quizName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.quizId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.quizId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuestionIndex)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionIndex)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.quizQuestion.QuestionSelf)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.quizQuestion.QuestionSelf)
+        </dd>
+            @for (int i = 0; i < Model.answers.Count(); i++)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.answers[i].Answer_Text)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.ActionLink(Model.answers[i].Answer_Text, "NextQuestion", new { quizId = Model.quizId, quizName = Model.quizName, qstnIndex = Model.QuestionIndex, date = timestarted, correct = Model.answers[i].IsCorrect, score = ViewBag.score })
+                </dd>
+            }
+    </dl>
+</div>
+<div>
+    <p>Score : @ViewBag.score</p>
+</div>

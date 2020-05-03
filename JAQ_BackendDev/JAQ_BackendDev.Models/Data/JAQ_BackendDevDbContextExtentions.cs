@@ -1,13 +1,23 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using JAQ_BackendDev.Models.Repositories;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace JAQ_BackendDev.Models.Data
 {
     public class JAQ_BackendDevDbContextExtentions
     {
+
+        private readonly IQuizRepo _quizRepo;
+
+        public JAQ_BackendDevDbContextExtentions(IQuizRepo quizRepo)
+        {
+            this._quizRepo = quizRepo;
+        }
+
         public async static Task SeedRoles(RoleManager<IdentityRole> RoleMgr)
         {
             IdentityResult roleResult;

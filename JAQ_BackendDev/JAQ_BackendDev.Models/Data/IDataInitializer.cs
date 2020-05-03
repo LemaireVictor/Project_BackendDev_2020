@@ -7,6 +7,6 @@ namespace JAQ_BackendDev.Models.Data
 {
     public interface IDataInitializer
     {
-        Task AddQuiz();
+        Task InitQuizzes();
     }
 }

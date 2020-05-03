@@ -127,7 +127,12 @@ C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\JAQ_BackendDev.API.dll
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\JAQ_BackendDev.API.pdb
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\JAQ_BackendDev.Models.pdb
-C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\obj\Debug\netcoreapp3.1\JAQ_BackendDev.API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\obj\Debug\netcoreapp3.1\JAQ_BackendDev.API.csproj.CopyComplete
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\obj\Debug\netcoreapp3.1\JAQ_BackendDev.API.dll
 C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\obj\Debug\netcoreapp3.1\JAQ_BackendDev.API.pdb
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\obj\Debug\netcoreapp3.1\JAQ_BackendDev.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Victor Lemaire\source\repos\JAQ_BackendDev\JAQ_BackendDev.API\obj\Debug\netcoreapp3.1\JAQ_BackendDev.API.MvcApplicationPartsAssemblyInfo.cache

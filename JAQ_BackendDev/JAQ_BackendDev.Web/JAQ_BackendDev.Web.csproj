@@ -20,9 +20,4 @@
     <ProjectReference Include="..\JAQ_BackendDev.Models\JAQ_BackendDev.Models.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
 </Project>

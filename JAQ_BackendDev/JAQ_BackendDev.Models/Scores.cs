@@ -13,7 +13,6 @@ namespace JAQ_BackendDev.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; } = DateTime.Now;
 
-
         // for keys
 
         public string AppUserId { get; set; }

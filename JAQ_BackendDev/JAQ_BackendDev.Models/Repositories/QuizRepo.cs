@@ -24,7 +24,7 @@ namespace JAQ_BackendDev.Models.Repositories
         {
             try
             {
-                var result = await _context.Quizzes.Include(q => q.Questions).ThenInclude(q => q.Answers).ToListAsync<Quiz>();
+                var result = await _context.Quizzes.Include(q => q.Questions).ThenInclude(q => q.Answers).ToListAsync();
                 return result;
             }
             catch (Exception ex)
@@ -54,6 +54,21 @@ namespace JAQ_BackendDev.Models.Repositories
             try
             {
                 var result = await _context.Quizzes.SingleOrDefaultAsync(q => q.Id == id);
+
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<Quiz> GetQuizByNameAsync(string name)
+        {
+            try
+            {
+                var result = await _context.Quizzes.Include(e => e.Questions).ThenInclude(e => e.Answers).SingleOrDefaultAsync(q => q.Name == name);
 
                 return result;
             }

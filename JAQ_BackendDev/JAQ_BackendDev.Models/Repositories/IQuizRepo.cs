@@ -15,6 +15,8 @@ namespace JAQ_BackendDev.Models.Repositories
 
         Task<Quiz> GetQuizById(Guid id);
 
+        Task<Quiz> GetQuizByNameAsync(string name);
+
         // create
         Task<Quiz> AddQuizAsync(Quiz quiz);
 

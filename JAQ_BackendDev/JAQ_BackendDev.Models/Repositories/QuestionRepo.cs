@@ -23,7 +23,7 @@ namespace JAQ_BackendDev.Models.Repositories
         {
             try
             {
-                var result = await _context.Questions.Where(q => q.QuizId == quizid).ToListAsync<Question>();
+                var result = await _context.Questions.Where(q => q.QuizId == quizid).Include(e => e.Answers).ToListAsync();
                 return result;
             }
             catch (Exception)

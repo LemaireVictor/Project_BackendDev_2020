@@ -10,6 +10,15 @@
 <table class="table">
     <thead>
         <tr>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppUserId)
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -25,6 +34,15 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppUserId)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -35,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.Diff)
             </td>
             <td>
-                @Html.ActionLink("Play", "playQuiz", new { /* id=item.PrimaryKey */ }) 
+                @Html.ActionLink("Play", "PlayQuiz", new { /* id=item.PrimaryKey */quizid = item.Id })
             </td>
         </tr>
 }
