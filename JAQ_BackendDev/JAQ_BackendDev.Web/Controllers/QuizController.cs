@@ -49,13 +49,6 @@ namespace JAQ_BackendDev.Web.Controllers
         public async Task<ActionResult> Questions(Guid quizid)
         {
             var result = await _questionRepo.GetQuestionsQuiz(quizid);
-
-            if (result.Count() == 0)
-            {
-                return StatusCode(404);
-            }
-            else
-            {
                 try
                 {
                     var qz = await _quizRepo.GetQuizById(quizid);
@@ -69,19 +62,11 @@ namespace JAQ_BackendDev.Web.Controllers
 
                     throw;
                 }
-            }
         }
 
         public async Task<ActionResult> Answers(Guid id)
         {
             var result = await _answerRepo.GetAnswersForQuestion(id);
-
-            if (result.Count() == 0)
-            {
-                return StatusCode(404);
-            }
-            else
-            {
                 try
                 {
                     var question = await _questionRepo.GetQuestionByIdAsync(id);
@@ -96,7 +81,6 @@ namespace JAQ_BackendDev.Web.Controllers
 
                     throw;
                 }
-            }
         }
 
         public async Task<ActionResult> PlayQuiz(Guid quizId)
@@ -141,6 +125,8 @@ namespace JAQ_BackendDev.Web.Controllers
         {
             try
             {
+                var qstnList = await _questionRepo.GetQuestionsQuiz(quizId);
+
                 if (correct)
                 {
                     TimeSpan timeDiff = DateTime.Now.Subtract(date);
@@ -149,8 +135,16 @@ namespace JAQ_BackendDev.Web.Controllers
                     }
                     else
                     {
-                        int stp1 = 30 - Convert.ToInt32(timeDiff.TotalSeconds);
-                        score = score + (stp1 * 10);
+
+                        if (score >= (qstnList.Count() * 300))
+                        {
+                            score = 0;
+                        }
+                        else
+                        {
+                            int stp1 = 30 - Convert.ToInt32(timeDiff.TotalSeconds);
+                            score = score + (stp1 * 10);
+                        }
                     }
                 }
                 else
@@ -158,8 +152,6 @@ namespace JAQ_BackendDev.Web.Controllers
                 }
 
                 fullQuiz fq = new fullQuiz() { quizName = quizName, quizId = quizId, QuestionIndex = qstnIndex };
-
-                var qstnList = await _questionRepo.GetQuestionsQuiz(fq.quizId);
                 fq.QuestionIndex += 1;
 
                 if (fq.QuestionIndex >= qstnList.Count())
@@ -176,7 +168,7 @@ namespace JAQ_BackendDev.Web.Controllers
 
                     QuizScore qzsc = new QuizScore() { score = newscore, quiz = qz };
 
-
+                    ViewBag.score = score;
 
                     return View("EndQuiz", qzsc);
                 }
@@ -293,7 +285,7 @@ namespace JAQ_BackendDev.Web.Controllers
         }
 
         // GET: Quiz/Edit/5
-        public ActionResult EditQuiz(int id)
+        public ActionResult EditQuiz(Guid id)
         {
             return View();
         }
@@ -307,7 +299,7 @@ namespace JAQ_BackendDev.Web.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("MyQuizzes");
             }
             catch
             {

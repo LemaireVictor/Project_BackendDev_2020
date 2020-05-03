@@ -9,7 +9,6 @@
 <h2> @ViewBag.QuizName - (Quiz)</h2>
 
 <p>
-    @Html.ActionLink("Return To My Quizzes", "MyQuizzes", new { })
     <a asp-action="CreateQuestion" asp-route-quizid=@ViewBag.QuizId>Create New</a>
 </p>
 <table class="table">
@@ -34,7 +33,6 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Answers", "Answers", new {id = item.Id }) |
                 @Html.ActionLink("Delete", "DeleteQuestion", new { /* id=item.PrimaryKey */id = item.Id })
             </td>

@@ -97,6 +97,28 @@ namespace JAQ_BackendDev.Models.Repositories
 
         }
 
+        // update
+        public async Task UpdateQuiz(Quiz quiz, Quiz nwqz)
+        {
+            try
+            {
+                var result = await _context.Quizzes.FirstOrDefaultAsync(e => e.Id == quiz.Id);
+                result.Name = nwqz.Name;
+                result.Description = nwqz.Description;
+                result.Diff = nwqz.Diff;
+
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
         //delete 
 
         public async Task DeleteQuizAsync(Guid id)
