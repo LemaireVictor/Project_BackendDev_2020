@@ -285,19 +285,23 @@ namespace JAQ_BackendDev.Web.Controllers
         }
 
         // GET: Quiz/Edit/5
-        public ActionResult EditQuiz(Guid id)
+        [Authorize(Roles = "Admin, Creator")]
+        public async Task<ActionResult> EditQuiz(Guid id)
         {
-            return View();
+            var result = await _quizRepo.GetQuizById(id);
+
+            return View(result);
         }
 
         // POST: Quiz/Edit/5
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditQuiz(int id, IFormCollection collection)
+        public async Task<ActionResult> EditQuiz(IFormCollection collection, Quiz quiz)
         {
             try
             {
-                // TODO: Add update logic here
+                await _quizRepo.UpdateQuiz(quiz);
 
                 return RedirectToAction("MyQuizzes");
             }
@@ -338,7 +342,7 @@ namespace JAQ_BackendDev.Web.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin, Creator")]
         public async Task<ActionResult> DeleteQuestion(Guid id)
         {
             if (id == null)
@@ -350,6 +354,7 @@ namespace JAQ_BackendDev.Web.Controllers
         }
 
         // POST: Quiz/Delete/5
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteQuestion(Guid id, IFormCollection collection)
@@ -368,6 +373,7 @@ namespace JAQ_BackendDev.Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Creator")]
         public async Task<ActionResult> DeleteAnswer(Guid id)
         {
             if (id == null)
@@ -379,6 +385,7 @@ namespace JAQ_BackendDev.Web.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Creator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteAnswer(Guid id, IFormCollection collection)

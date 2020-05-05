@@ -52,6 +52,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Diff)
             </td>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+        <td>
+            @Html.ActionLink("Delete", "DeleteQuiz", new { id = item.Id })
+        </td>
+            }
+
+
             <td>
                 @Html.ActionLink("Play", "PlayQuiz", new { /* id=item.PrimaryKey */quizid = item.Id })
             </td>

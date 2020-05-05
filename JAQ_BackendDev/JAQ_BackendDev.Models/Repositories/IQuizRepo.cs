@@ -21,7 +21,7 @@ namespace JAQ_BackendDev.Models.Repositories
         Task<Quiz> AddQuizAsync(Quiz quiz);
 
         //put
-        Task UpdateQuiz(Quiz quiz, Quiz qz);
+        Task UpdateQuiz(Quiz quiz);
 
         //delete
         Task DeleteQuizAsync(Guid id);

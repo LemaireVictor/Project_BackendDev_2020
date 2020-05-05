@@ -16,6 +16,7 @@ namespace JAQ_BackendDev.Models
         [StringLength(250, ErrorMessage = "Descreption is limited to 250 charachter")]
         public string Description { get; set; }
 
+        [Required]
         public Difficulty Diff { get; set; }
 
         public enum Difficulty

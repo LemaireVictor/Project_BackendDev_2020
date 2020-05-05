@@ -37,7 +37,7 @@ namespace JAQ_BackendDev.Web.Controllers
             return View(result);//De view ontvangt een @model IEnumerable<IdentityRole>
         }
 
-        public ActionResult Index()
+        public ActionResult AddRoleToUser(string UserId)
         {
             return View();
         }

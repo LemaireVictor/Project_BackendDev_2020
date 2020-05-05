@@ -8,10 +8,11 @@ namespace JAQ_BackendDev.Models
 {
     public class AppUser : IdentityUser
     {
-
+        [Required]
         [StringLength(50,MinimumLength = 2 , ErrorMessage = "First Name can only be 2 to 50 characters long")]
         public string Firstname { get; set; }
 
+        [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Last Name can only be 2 to 50 characters long")]
         public string Lastname { get; set; }
 

@@ -24,7 +24,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Diff" class="control-label"></label>
-                <input asp-for="Diff" class="form-control" />
+                <div>
+                    <select asp-for="Diff" asp-items="Html.GetEnumSelectList<Quiz.Difficulty>()">
+                        <option>-- difficulty --</option>
+
+                    </select>
+                </div>
                 <span asp-validation-for="Diff" class="text-danger"></span>
             </div>
             <div class="form-group">
